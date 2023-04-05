@@ -19,11 +19,13 @@ public class UserServiceImpl implements UserService {
 
         // Validate the required fields
         userProfileUtils.validateRequiredFields(user);
+
         // Check if user already exist
         UserDTO existingUser = this.getUserByUserName(user.getEmail());
         if(existingUser != null){
             throw new CouldNotCreateRecordException(ErrorMessages.RECORD_ALREADY_EXISTS.name());
         }
+
         // Generate secure public user id
         String userId = userProfileUtils.generateUserId(30);
         user.setUserId(userId);
@@ -35,7 +37,22 @@ public class UserServiceImpl implements UserService {
         String encryptedPassword = userProfileUtils.generateSecurePassword(user.getPassword(), salt);
         user.setSalt(salt);
         user.setEncryptedPassword(encryptedPassword);
-        // persist the data into database
+
+        // Persist the data into database
+        returnValue = this.saveUser(user);
+
+        // Return back to the user profile
+        return returnValue;
+    }
+
+    private UserDTO saveUser(UserDTO user) {
+        UserDTO returnValue = null;
+        try {
+            this.database.openConnection();
+            returnValue = this.database.saveUser(user);
+        } finally {
+            this.database.closeConnection();
+        }
         return returnValue;
     }
 

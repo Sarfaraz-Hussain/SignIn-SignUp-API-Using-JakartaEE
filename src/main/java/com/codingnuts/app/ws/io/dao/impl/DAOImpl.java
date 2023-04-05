@@ -56,4 +56,17 @@ public class DAOImpl implements DAO {
             session.close();
         }
     }
+
+    @Override
+    public UserDTO saveUser(UserDTO user) {
+        UserDTO returnValue = null;
+        UserEntity userEntity = new UserEntity();
+        BeanUtils.copyProperties(user, userEntity);
+        session.beginTransaction();
+        session.save(userEntity);
+        session.getTransaction().commit();
+        returnValue = new UserDTO();
+        BeanUtils.copyProperties(userEntity, returnValue);
+        return returnValue;
+    }
 }
