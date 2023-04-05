@@ -24,16 +24,18 @@ public class UserServiceImpl implements UserService {
         if(existingUser != null){
             throw new CouldNotCreateRecordException(ErrorMessages.RECORD_ALREADY_EXISTS.name());
         }
-        // Create an entity object
-
-
         // Generate secure public user id
-        // Generate Salt
+        String userId = userProfileUtils.generateUserId(30);
+        user.setUserId(userId);
 
+        // Generate Salt
+        String salt = userProfileUtils.getSalt(30);
 
         // Generate secure password
-
-        // persist the into database
+        String encryptedPassword = userProfileUtils.generateSecurePassword(user.getPassword(), salt);
+        user.setSalt(salt);
+        user.setEncryptedPassword(encryptedPassword);
+        // persist the data into database
         return returnValue;
     }
 
