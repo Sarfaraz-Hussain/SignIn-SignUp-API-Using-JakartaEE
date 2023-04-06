@@ -8,4 +8,5 @@ public interface DAO {
     void closeConnection();
 
     UserDTO saveUser(UserDTO user);
+    UserDTO getUser(String id);
 }

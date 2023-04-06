@@ -48,10 +48,24 @@ public class MYSQLDAO implements DAO {
     }
 
     @Override
-    public void closeConnection() {
-        if (session != null) {
-            session.close();
-        }
+    public UserDTO getUser(String id) {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+
+        //Create Criteria against a particular persistent class
+        CriteriaQuery<UserEntity> criteria = cb.createQuery(UserEntity.class);
+
+        //Query roots always reference entitie
+        Root<UserEntity> profileRoot = criteria.from(UserEntity.class);
+        criteria.select(profileRoot);
+        criteria.where(cb.equal(profileRoot.get("userId"), id));
+
+        // Fetch single result
+        UserEntity userEntity = session.createQuery(criteria).getSingleResult();
+
+        UserDTO userDto = new UserDTO();
+        BeanUtils.copyProperties(userEntity, userDto);
+
+        return userDto;
     }
 
     @Override
@@ -65,5 +79,12 @@ public class MYSQLDAO implements DAO {
         returnValue = new UserDTO();
         BeanUtils.copyProperties(userEntity, returnValue);
         return returnValue;
+    }
+
+    @Override
+    public void closeConnection() {
+        if (session != null) {
+            session.close();
+        }
     }
 }

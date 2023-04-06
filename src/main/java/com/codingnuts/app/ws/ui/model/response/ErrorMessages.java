@@ -3,7 +3,8 @@ package com.codingnuts.app.ws.ui.model.response;
 public enum ErrorMessages {
     MISSING_REQUIRED_FIELD("Missing Required Field. Please check documentation for required fields"),
     RECORD_ALREADY_EXISTS("Record already exists"),
-    INTERNAL_SERVER_ERROR("Inter Server Error");
+    INTERNAL_SERVER_ERROR("Inter Server Error"),
+    NO_RECORD_FOUND("No Record Found");
 
     private String errorMessage;
     ErrorMessages(String errorMessage) {

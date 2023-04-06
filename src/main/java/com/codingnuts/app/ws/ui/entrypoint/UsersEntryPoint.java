@@ -6,10 +6,7 @@ import com.codingnuts.app.ws.service.impl.UserServiceImpl;
 import com.codingnuts.app.ws.shared.dto.UserDTO;
 import com.codingnuts.app.ws.ui.model.request.CreateUserRequestModel;
 import com.codingnuts.app.ws.ui.model.response.UserProfileRest;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.springframework.beans.BeanUtils;
 
@@ -32,6 +29,18 @@ public class UsersEntryPoint {
         // Prepare response
         BeanUtils.copyProperties(createdUserProfile, returnValue);
 
+        return returnValue;
+    }
+
+    @GET
+    @Path("user/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public UserProfileRest getUserProfile(@PathParam("id") String id) {
+        UserProfileRest returnValue = null;
+        UserService userService = new UserServiceImpl();
+        UserDTO userProfile = userService.getUser(id);
+        returnValue = new UserProfileRest();
+        BeanUtils.copyProperties(userProfile, returnValue);
         return returnValue;
     }
 

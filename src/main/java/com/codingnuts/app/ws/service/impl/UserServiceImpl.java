@@ -1,6 +1,7 @@
 package com.codingnuts.app.ws.service.impl;
 
 import com.codingnuts.app.ws.exception.CouldNotCreateRecordException;
+import com.codingnuts.app.ws.exception.NoRecordFoundException;
 import com.codingnuts.app.ws.io.dao.DAO;
 import com.codingnuts.app.ws.io.dao.impl.MYSQLDAO;
 import com.codingnuts.app.ws.service.UserService;
@@ -41,6 +42,22 @@ public class UserServiceImpl implements UserService {
         // Return back to the user profile
         return returnValue;
     }
+
+    @Override
+    public UserDTO getUser(String id) {
+        UserDTO returnValue = null;
+        try {
+            this.database.openConnection();
+            returnValue = this.database.getUser(id);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new NoRecordFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+        } finally {
+            this.database.closeConnection();
+        }
+        return returnValue;
+    }
+
 
     private UserDTO saveUser(UserDTO user) {
         UserDTO returnValue = null;
