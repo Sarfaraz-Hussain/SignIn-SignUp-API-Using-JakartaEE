@@ -70,7 +70,8 @@ public class UserServiceImpl implements UserService {
         return returnValue;
     }
 
-    private UserDTO getUserByUserName(String userName) {    // using user email as userName
+    @Override
+    public UserDTO getUserByUserName(String userName) {    // using user email as userName
         UserDTO userDTO = null;
         if (userName == null || userName.isEmpty()) {
             return null;

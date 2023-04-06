@@ -81,4 +81,8 @@ public class UserProfileUtils {
             spec.clearPassword();
         }
     }
+
+    public byte[] encrypt(String encryptedPassword, String accessTokenMaterial) {
+        return hash(encryptedPassword.toCharArray(), accessTokenMaterial.getBytes());
+    }
 }

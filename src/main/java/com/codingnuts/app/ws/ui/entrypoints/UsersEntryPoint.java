@@ -1,4 +1,4 @@
-package com.codingnuts.app.ws.ui.entrypoint;
+package com.codingnuts.app.ws.ui.entrypoints;
 
 
 import com.codingnuts.app.ws.service.UserService;
@@ -43,8 +43,4 @@ public class UsersEntryPoint {
         BeanUtils.copyProperties(userProfile, returnValue);
         return returnValue;
     }
-
-
-
-
 }
