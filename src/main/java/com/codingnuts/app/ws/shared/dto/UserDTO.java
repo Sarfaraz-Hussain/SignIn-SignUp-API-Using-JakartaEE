@@ -3,9 +3,10 @@ package com.codingnuts.app.ws.shared.dto;
 import java.io.Serializable;
 
 public class UserDTO implements Serializable {
-    public static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1L;
+    private long id;
     private String userId;
-    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -75,5 +76,19 @@ public class UserDTO implements Serializable {
 
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "userId='" + userId + '\'' +
+                ", id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", encryptedPassword='" + encryptedPassword + '\'' +
+                '}';
     }
 }

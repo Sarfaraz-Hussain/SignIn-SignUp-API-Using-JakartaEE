@@ -25,7 +25,6 @@ public class UsersEntryPoint {
         // Prepare UserDTO
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(requestObject, userDTO);
-
         // Create mew user
         UserService userService = new UserServiceImpl();
         UserDTO createdUserProfile = userService.createUser(userDTO);
