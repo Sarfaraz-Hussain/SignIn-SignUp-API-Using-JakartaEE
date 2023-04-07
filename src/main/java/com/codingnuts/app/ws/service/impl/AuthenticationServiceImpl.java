@@ -9,13 +9,13 @@ import com.codingnuts.app.ws.shared.dto.UserDTO;
 import com.codingnuts.app.ws.ui.model.response.ErrorMessages;
 import com.codingnuts.app.ws.utils.UserProfileUtils;
 
-import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
     DAO database;
+
     @Override
     public UserDTO authenticate(String userName, String password) {
         UserService userService = new UserServiceImpl();
@@ -38,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String issueAccessToken(UserDTO userProfile) throws AuthenticationException{
+    public String issueAccessToken(UserDTO userProfile) throws AuthenticationException {
         String returnValue = null;
         String newSaltAsPostfix = userProfile.getSalt();
         String accessTokenMaterial = userProfile.getUserId() + newSaltAsPostfix;

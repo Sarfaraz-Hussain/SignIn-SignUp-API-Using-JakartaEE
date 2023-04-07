@@ -54,6 +54,7 @@ public class UserProfileUtils {
             throw new MissingRequiredFieldException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
     }
+
     public String getSalt(int length) {
         return generateRandomString(length);
     }
@@ -67,6 +68,7 @@ public class UserProfileUtils {
 
         return returnValue;
     }
+
     public byte[] hash(char[] password, byte[] salt) {
         PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
         Arrays.fill(password, Character.MIN_VALUE);
