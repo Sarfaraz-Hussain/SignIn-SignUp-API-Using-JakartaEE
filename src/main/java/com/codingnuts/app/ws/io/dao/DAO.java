@@ -15,4 +15,6 @@ public interface DAO {
     void updateUser(UserDTO userProfile);
 
     List<UserDTO> getUsers(int start, int limit);
+
+    void deleteUser(UserDTO storedUserDetails);
 }

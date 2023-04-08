@@ -7,6 +7,9 @@ import com.codingnuts.app.ws.service.impl.UserServiceImpl;
 import com.codingnuts.app.ws.shared.dto.UserDTO;
 import com.codingnuts.app.ws.ui.model.request.CreateUserRequestModel;
 import com.codingnuts.app.ws.ui.model.request.UpdateUserRequestModel;
+import com.codingnuts.app.ws.ui.model.response.DeleteUserProfileResponseModel;
+import com.codingnuts.app.ws.ui.model.response.RequestOperation;
+import com.codingnuts.app.ws.ui.model.response.ResponseStatus;
 import com.codingnuts.app.ws.ui.model.response.UserProfileRest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -68,6 +71,7 @@ public class UsersEntryPoint {
         return returnValue;
     }
 
+    @Secured
     @PUT
     @Path("update/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -82,6 +86,20 @@ public class UsersEntryPoint {
         userService.updateUserDetails(storedUserDetails);
         UserProfileRest returnValue = new UserProfileRest();
         BeanUtils.copyProperties(storedUserDetails, returnValue);
+        return returnValue;
+    }
+
+    @Secured
+    @DELETE
+    @Path("delete/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public DeleteUserProfileResponseModel deleteUserProfile(@PathParam("id") String id) {
+        DeleteUserProfileResponseModel returnValue = new DeleteUserProfileResponseModel();
+        returnValue.setRequestOperation(RequestOperation.DELETE);
+        UserService userService = new UserServiceImpl();
+        UserDTO storedUserDetails = userService.getUser(id);
+        userService.deleteUser(storedUserDetails);
+        returnValue.setResponseStatus(ResponseStatus.SUCCESS);
         return returnValue;
     }
 }

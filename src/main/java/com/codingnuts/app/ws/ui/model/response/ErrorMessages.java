@@ -9,7 +9,8 @@ public enum ErrorMessages {
     AUTHENTICATION_FAILED("Authentication failed"),
     NO_RECORD_FOUND("Record with provided id is not found"),
 
-    COULD_NOT_UPDATE_RECORD("Could not update record") ;
+    COULD_NOT_UPDATE_RECORD("Could not update record"),
+    COULD_NOT_DELETE_RECORD("Could not delete record");
     private String errorMessage;
     ErrorMessages(String errorMessage) {
         this.errorMessage = errorMessage;

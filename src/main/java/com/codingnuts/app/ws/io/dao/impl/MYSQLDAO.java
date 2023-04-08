@@ -103,6 +103,15 @@ public class MYSQLDAO implements DAO {
     }
 
     @Override
+    public void deleteUser(UserDTO storedUserDetails) {
+        UserEntity userEntity = new UserEntity();
+        BeanUtils.copyProperties(storedUserDetails, userEntity);
+        session.beginTransaction();
+        session.delete(userEntity);
+        session.getTransaction().commit();
+    }
+
+    @Override
     public UserDTO saveUser(UserDTO user) {
         UserDTO returnValue = null;
         UserEntity userEntity = new UserEntity();
