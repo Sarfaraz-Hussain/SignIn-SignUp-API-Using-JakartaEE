@@ -6,6 +6,7 @@ import com.codingnuts.app.ws.service.UserService;
 import com.codingnuts.app.ws.service.impl.UserServiceImpl;
 import com.codingnuts.app.ws.shared.dto.UserDTO;
 import com.codingnuts.app.ws.ui.model.request.CreateUserRequestModel;
+import com.codingnuts.app.ws.ui.model.request.UpdateUserRequestModel;
 import com.codingnuts.app.ws.ui.model.response.UserProfileRest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -64,6 +65,23 @@ public class UsersEntryPoint {
             userModel.setHref("/users/user/" + user.getUserId());
             returnValue.add(userModel);
         }
+        return returnValue;
+    }
+
+    @PUT
+    @Path("update/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public UserProfileRest updateUserDetails(@PathParam("id") String id, UpdateUserRequestModel userDetails) {
+        UserService userService = new UserServiceImpl();
+        UserDTO storedUserDetails = userService.getUser(id);
+        if(storedUserDetails.getFirstName() != null && !storedUserDetails.getFirstName().isEmpty()) {
+            storedUserDetails.setFirstName(userDetails.getFirstName());
+        }
+        storedUserDetails.setLastName(userDetails.getLastName());
+        userService.updateUserDetails(storedUserDetails);
+        UserProfileRest returnValue = new UserProfileRest();
+        BeanUtils.copyProperties(storedUserDetails, returnValue);
         return returnValue;
     }
 }

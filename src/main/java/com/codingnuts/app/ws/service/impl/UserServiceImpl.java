@@ -1,6 +1,7 @@
 package com.codingnuts.app.ws.service.impl;
 
 import com.codingnuts.app.ws.exception.CouldNotCreateRecordException;
+import com.codingnuts.app.ws.exception.CouldNotUpdateRecordException;
 import com.codingnuts.app.ws.exception.NoRecordFoundException;
 import com.codingnuts.app.ws.io.dao.DAO;
 import com.codingnuts.app.ws.io.dao.impl.MYSQLDAO;
@@ -98,5 +99,17 @@ public class UserServiceImpl implements UserService {
             this.database.closeConnection();
         }
         return users;
+    }
+
+    @Override
+    public void updateUserDetails(UserDTO storedUserDetails) {
+        try {
+            this.database.openConnection();
+            this.database.updateUser(storedUserDetails);
+        } catch (Exception ex) {
+            throw new CouldNotUpdateRecordException(ex.getMessage());
+        } finally {
+            this.database.closeConnection();
+        }
     }
 }
