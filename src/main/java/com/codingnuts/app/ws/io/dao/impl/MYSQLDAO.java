@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MYSQLDAO implements DAO {
@@ -76,6 +77,29 @@ public class MYSQLDAO implements DAO {
         session.beginTransaction();
         session.update(userEntity);
         session.getTransaction().commit();
+    }
+
+    @Override
+    public List<UserDTO> getUsers(int start, int limit) {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+
+        // Create criteria against a particular persistent class
+        CriteriaQuery<UserEntity> criteria = cb.createQuery(UserEntity.class);
+
+        // Query roots always reference entities
+        Root<UserEntity> userRoot = criteria.from(UserEntity.class);
+        criteria.select(userRoot);
+
+        // Fetch result from start to a number of limit
+        List<UserEntity> searchResults = session.createQuery(criteria).setFirstResult(start).setMaxResults(limit).getResultList();
+
+        List<UserDTO> returnValue = new ArrayList<>();
+        for(UserEntity entity : searchResults) {
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(entity, userDTO);
+            returnValue.add(userDTO);
+        }
+        return returnValue;
     }
 
     @Override

@@ -18,7 +18,18 @@ public class UserEntity implements Serializable {
     private String lastName;
     private String email;
     private String salt;
+
+    private String token;
+
     private String encryptedPassword;
+
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 
     public long getId() {
         return id;
