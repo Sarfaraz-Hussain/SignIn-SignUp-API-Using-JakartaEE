@@ -1,6 +1,7 @@
 package com.codingnuts.app.ws.service.impl;
 
 import com.codingnuts.app.ws.exception.AuthenticationException;
+import com.codingnuts.app.ws.exception.EmailVerificationException;
 import com.codingnuts.app.ws.io.dao.DAO;
 import com.codingnuts.app.ws.io.dao.impl.MYSQLDAO;
 import com.codingnuts.app.ws.service.AuthenticationService;
@@ -23,6 +24,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (storedUser == null) {
             throw new AuthenticationException(ErrorMessages.AUTHENTICATION_FAILED.getErrorMessage());
         }
+
+        if(!storedUser.getEmailVerificationStatus()) {
+            throw new EmailVerificationException(ErrorMessages.EMAIL_ADDRESS_NOT_VERIFIED.getErrorMessage());
+        }
+
         String encryptedPassword = null;
         encryptedPassword = new UserProfileUtils().generateSecurePassword(password, storedUser.getSalt());
         boolean authenticated = false;

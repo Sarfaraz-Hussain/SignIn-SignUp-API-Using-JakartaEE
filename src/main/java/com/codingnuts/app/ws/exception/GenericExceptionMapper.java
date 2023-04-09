@@ -11,7 +11,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
     public Response toResponse(Throwable throwable) {
-        ErrorMessage errorMessage = new ErrorMessage(throwable.getMessage(), ErrorMessages.INTERNAL_SERVER_ERROR.name(),"https://codingnuts.com");
+        ErrorMessage errorMessage = new ErrorMessage(throwable.getMessage(), ErrorMessages.INTERNAL_SERVER_ERROR.name(), "https://codingnuts.com");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
     }
 }

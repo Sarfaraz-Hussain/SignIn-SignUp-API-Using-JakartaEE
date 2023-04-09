@@ -8,6 +8,7 @@ public interface UserService {
     UserDTO createUser(UserDTO user);
 
     UserDTO getUser(String id);
+
     UserDTO getUserByUserName(String userName);
 
     List<UserDTO> getUsers(int start, int limit);
@@ -15,4 +16,5 @@ public interface UserService {
     void updateUserDetails(UserDTO storedUserDetails);
 
     void deleteUser(UserDTO storedUserDetails);
+    boolean verifyEmail(String token);
 }

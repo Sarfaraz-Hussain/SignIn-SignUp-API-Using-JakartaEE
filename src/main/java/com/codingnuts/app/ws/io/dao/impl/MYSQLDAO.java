@@ -94,7 +94,7 @@ public class MYSQLDAO implements DAO {
         List<UserEntity> searchResults = session.createQuery(criteria).setFirstResult(start).setMaxResults(limit).getResultList();
 
         List<UserDTO> returnValue = new ArrayList<>();
-        for(UserEntity entity : searchResults) {
+        for (UserEntity entity : searchResults) {
             UserDTO userDTO = new UserDTO();
             BeanUtils.copyProperties(entity, userDTO);
             returnValue.add(userDTO);
@@ -109,6 +109,27 @@ public class MYSQLDAO implements DAO {
         session.beginTransaction();
         session.delete(userEntity);
         session.getTransaction().commit();
+    }
+
+    @Override
+    public UserDTO getUserByEmailToken(String token) {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+
+        //Create Criteria against a particular persistent class
+        CriteriaQuery<UserEntity> criteria = cb.createQuery(UserEntity.class);
+
+        //Query roots always reference entities
+        Root<UserEntity> profileRoot = criteria.from(UserEntity.class);
+        criteria.select(profileRoot);
+        criteria.where(cb.equal(profileRoot.get("emailVerificationToken"), token));
+
+        // Fetch single result
+        UserEntity userEntity = session.createQuery(criteria).getSingleResult();
+
+        UserDTO userDto = new UserDTO();
+        BeanUtils.copyProperties(userEntity, userDto);
+
+        return userDto;
     }
 
     @Override

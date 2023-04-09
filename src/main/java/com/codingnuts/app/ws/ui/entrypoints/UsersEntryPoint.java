@@ -62,7 +62,7 @@ public class UsersEntryPoint {
         List<UserDTO> users = userService.getUsers(start, limit);
         // prepare a return value
         List<UserProfileRest> returnValue = new ArrayList<>();
-        for(UserDTO user : users) {
+        for (UserDTO user : users) {
             UserProfileRest userModel = new UserProfileRest();
             BeanUtils.copyProperties(user, userModel);
             userModel.setHref("/users/user/" + user.getUserId());
@@ -79,7 +79,7 @@ public class UsersEntryPoint {
     public UserProfileRest updateUserDetails(@PathParam("id") String id, UpdateUserRequestModel userDetails) {
         UserService userService = new UserServiceImpl();
         UserDTO storedUserDetails = userService.getUser(id);
-        if(storedUserDetails.getFirstName() != null && !storedUserDetails.getFirstName().isEmpty()) {
+        if (storedUserDetails.getFirstName() != null && !storedUserDetails.getFirstName().isEmpty()) {
             storedUserDetails.setFirstName(userDetails.getFirstName());
         }
         storedUserDetails.setLastName(userDetails.getLastName());

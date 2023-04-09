@@ -10,7 +10,7 @@ import jakarta.ws.rs.ext.Provider;
 public class CouldNotUpdateRecordExceptionMapper implements ExceptionMapper<CouldNotUpdateRecordException> {
     @Override
     public Response toResponse(CouldNotUpdateRecordException exception) {
-        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), ErrorMessages.COULD_NOT_UPDATE_RECORD.name(),"https://codingnuts.com");
+        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), ErrorMessages.COULD_NOT_UPDATE_RECORD.name(), "https://codingnuts.com");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
     }
 }

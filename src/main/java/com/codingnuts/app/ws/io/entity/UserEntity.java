@@ -1,5 +1,6 @@
 package com.codingnuts.app.ws.io.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -22,10 +23,30 @@ public class UserEntity implements Serializable {
     private String token;
 
     private String encryptedPassword;
+    private String emailVerificationToken;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private Boolean emailVerificationStatus;
+
+    public String getEmailVerificationToken() {
+        return emailVerificationToken;
+    }
+
+    public void setEmailVerificationToken(String emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
+    }
+
+    public Boolean getEmailVerificationStatus() {
+        return emailVerificationStatus;
+    }
+
+    public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
+        this.emailVerificationStatus = emailVerificationStatus;
+    }
 
     public String getToken() {
         return token;
     }
+
     public void setToken(String token) {
         this.token = token;
     }

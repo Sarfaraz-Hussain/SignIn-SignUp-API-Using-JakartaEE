@@ -7,10 +7,11 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-public class CouldNotDeleteRecordExceptionMapper implements ExceptionMapper<CouldNotDeleteRecordException> {
+public class EmailVerificationExceptionMapper implements ExceptionMapper<EmailVerificationException> {
+
     @Override
-    public Response toResponse(CouldNotDeleteRecordException exception) {
-        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), ErrorMessages.COULD_NOT_DELETE_RECORD.name(), "https://codingnuts.com");
+    public Response toResponse(EmailVerificationException exception) {
+        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), ErrorMessages.EMAIL_ADDRESS_NOT_VERIFIED.name(), "https://codingnuts.com");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
     }
 }

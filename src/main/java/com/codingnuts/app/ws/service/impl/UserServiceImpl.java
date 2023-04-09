@@ -1,14 +1,12 @@
 package com.codingnuts.app.ws.service.impl;
 
-import com.codingnuts.app.ws.exception.CouldNotCreateRecordException;
-import com.codingnuts.app.ws.exception.CouldNotDeleteRecordException;
-import com.codingnuts.app.ws.exception.CouldNotUpdateRecordException;
-import com.codingnuts.app.ws.exception.NoRecordFoundException;
+import com.codingnuts.app.ws.exception.*;
 import com.codingnuts.app.ws.io.dao.DAO;
 import com.codingnuts.app.ws.io.dao.impl.MYSQLDAO;
 import com.codingnuts.app.ws.service.UserService;
 import com.codingnuts.app.ws.shared.dto.UserDTO;
 import com.codingnuts.app.ws.ui.model.response.ErrorMessages;
+import com.codingnuts.app.ws.utils.AmazonSES;
 import com.codingnuts.app.ws.utils.UserProfileUtils;
 
 import java.util.List;
@@ -40,9 +38,11 @@ public class UserServiceImpl implements UserService {
         String encryptedPassword = userProfileUtils.generateSecurePassword(user.getPassword(), salt);
         user.setSalt(salt);
         user.setEncryptedPassword(encryptedPassword);
+        user.setEmailVerificationStatus(false);
+        user.setEmailVerificationToken(userProfileUtils.generateEmailVerificationToken(30));
         // Persist the data into database
         returnValue = this.saveUser(user);
-
+        new AmazonSES().verifyEmail(user);
         // Return back to the user profile
         return returnValue;
     }
@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
         return returnValue;
     }
 
-
     private UserDTO saveUser(UserDTO user) {
         UserDTO returnValue = null;
         try {
@@ -75,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserByUserName(String userName) {    // using user email as userName
+    public UserDTO getUserByUserName(String userName) { // using user email as userName
         UserDTO userDTO = null;
         if (userName == null || userName.isEmpty()) {
             return null;
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getUsers(int start, int limit) {
         List<UserDTO> users = null;
-        try{
+        try {
             this.database.openConnection();
             users = this.database.getUsers(start, limit);
         } finally {
@@ -116,7 +115,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UserDTO storedUserDetails) {
-        try{
+        try {
             this.database.openConnection();
             this.database.deleteUser(storedUserDetails);
         } catch (Exception ex) {
@@ -126,13 +125,54 @@ public class UserServiceImpl implements UserService {
         }
         // verify that user is deleted
 
-        try{
+        try {
             storedUserDetails = getUser(storedUserDetails.getUserId());
         } catch (NoRecordFoundException ex) {
             storedUserDetails = null;
         }
-        if(storedUserDetails != null){
-            throw new CouldNotDeleteRecordException(ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
+        if (storedUserDetails != null) {
+            throw new CouldNotDeleteRecordException(
+                    ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
         }
+    }
+
+    @Override
+    public boolean verifyEmail(String token) {
+
+        if (token == null || token.isEmpty()) {
+            throw new EmailVerificationException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+
+        try {
+
+            UserDTO storedUserRecord = getUserByEmailToken(token);
+
+            if (storedUserRecord == null) {
+                return false;
+            }
+
+            // Update user Record
+            storedUserRecord.setEmailVerificationStatus(true);
+            storedUserRecord.setEmailVerificationToken(null);
+
+            updateUserDetails(storedUserRecord);
+
+
+        } catch (Exception ex) {
+            throw new EmailVerificationException(ex.getMessage());
+        }
+
+        return true;
+    }
+    private UserDTO getUserByEmailToken(String token) {
+        UserDTO returnValue;
+        try {
+            this.database.openConnection();
+            returnValue = this.database.getUserByEmailToken(token);
+
+        } finally {
+            this.database.closeConnection();
+        }
+        return returnValue;
     }
 }
