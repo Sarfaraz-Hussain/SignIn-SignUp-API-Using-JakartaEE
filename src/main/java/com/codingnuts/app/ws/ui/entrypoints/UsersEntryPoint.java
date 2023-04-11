@@ -20,7 +20,6 @@ import java.util.List;
 
 @Path("users")
 public class UsersEntryPoint {
-
     @Inject
     UserService userService;
 
