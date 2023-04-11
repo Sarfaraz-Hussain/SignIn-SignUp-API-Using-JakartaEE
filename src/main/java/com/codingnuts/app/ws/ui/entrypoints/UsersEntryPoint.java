@@ -3,7 +3,6 @@ package com.codingnuts.app.ws.ui.entrypoints;
 
 import com.codingnuts.app.ws.annotations.Secured;
 import com.codingnuts.app.ws.service.UserService;
-import com.codingnuts.app.ws.service.impl.UserServiceImpl;
 import com.codingnuts.app.ws.shared.dto.UserDTO;
 import com.codingnuts.app.ws.ui.model.request.CreateUserRequestModel;
 import com.codingnuts.app.ws.ui.model.request.UpdateUserRequestModel;
@@ -11,6 +10,7 @@ import com.codingnuts.app.ws.ui.model.response.DeleteUserProfileResponseModel;
 import com.codingnuts.app.ws.ui.model.response.RequestOperation;
 import com.codingnuts.app.ws.ui.model.response.ResponseStatus;
 import com.codingnuts.app.ws.ui.model.response.UserProfileRest;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +20,9 @@ import java.util.List;
 
 @Path("users")
 public class UsersEntryPoint {
+
+    @Inject
+    UserService userService;
 
     @POST
     @Path("create")
@@ -31,7 +34,6 @@ public class UsersEntryPoint {
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(requestObject, userDTO);
         // Create mew user
-        UserService userService = new UserServiceImpl();
         UserDTO createdUserProfile = userService.createUser(userDTO);
 
         // Prepare response
@@ -47,7 +49,6 @@ public class UsersEntryPoint {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public UserProfileRest getUserProfile(@PathParam("id") String id) {
         UserProfileRest returnValue = null;
-        UserService userService = new UserServiceImpl();
         UserDTO userProfile = userService.getUser(id);
         returnValue = new UserProfileRest();
         BeanUtils.copyProperties(userProfile, returnValue);
@@ -58,7 +59,6 @@ public class UsersEntryPoint {
     @Path("list")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<UserProfileRest> getUsers(@DefaultValue("0") @QueryParam("start") int start, @DefaultValue("50") @QueryParam("limit") int limit) {
-        UserService userService = new UserServiceImpl();
         List<UserDTO> users = userService.getUsers(start, limit);
         // prepare a return value
         List<UserProfileRest> returnValue = new ArrayList<>();
@@ -77,7 +77,6 @@ public class UsersEntryPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public UserProfileRest updateUserDetails(@PathParam("id") String id, UpdateUserRequestModel userDetails) {
-        UserService userService = new UserServiceImpl();
         UserDTO storedUserDetails = userService.getUser(id);
         if (storedUserDetails.getFirstName() != null && !storedUserDetails.getFirstName().isEmpty()) {
             storedUserDetails.setFirstName(userDetails.getFirstName());
@@ -96,7 +95,6 @@ public class UsersEntryPoint {
     public DeleteUserProfileResponseModel deleteUserProfile(@PathParam("id") String id) {
         DeleteUserProfileResponseModel returnValue = new DeleteUserProfileResponseModel();
         returnValue.setRequestOperation(RequestOperation.DELETE);
-        UserService userService = new UserServiceImpl();
         UserDTO storedUserDetails = userService.getUser(id);
         userService.deleteUser(storedUserDetails);
         returnValue.setResponseStatus(ResponseStatus.SUCCESS);
