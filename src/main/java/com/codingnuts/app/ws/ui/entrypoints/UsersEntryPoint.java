@@ -26,7 +26,7 @@ public class UsersEntryPoint {
     @POST
     @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces(MediaType.APPLICATION_JSON)
     public UserProfileRest createUser(CreateUserRequestModel requestObject) {
         UserProfileRest returnValue = new UserProfileRest();
         // Prepare UserDTO
@@ -45,7 +45,7 @@ public class UsersEntryPoint {
     @Secured
     @GET
     @Path("user/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces(MediaType.APPLICATION_JSON)
     public UserProfileRest getUserProfile(@PathParam("id") String id) {
         UserProfileRest returnValue = null;
         UserDTO userProfile = userService.getUser(id);
@@ -56,7 +56,7 @@ public class UsersEntryPoint {
 
     @GET
     @Path("list")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<UserProfileRest> getUsers(@DefaultValue("0") @QueryParam("start") int start, @DefaultValue("50") @QueryParam("limit") int limit) {
         List<UserDTO> users = userService.getUsers(start, limit);
         // prepare a return value
@@ -74,7 +74,7 @@ public class UsersEntryPoint {
     @PUT
     @Path("update/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces(MediaType.APPLICATION_JSON)
     public UserProfileRest updateUserDetails(@PathParam("id") String id, UpdateUserRequestModel userDetails) {
         UserDTO storedUserDetails = userService.getUser(id);
         if (storedUserDetails.getFirstName() != null && !storedUserDetails.getFirstName().isEmpty()) {
@@ -90,7 +90,7 @@ public class UsersEntryPoint {
     @Secured
     @DELETE
     @Path("delete/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces(MediaType.APPLICATION_JSON)
     public DeleteUserProfileResponseModel deleteUserProfile(@PathParam("id") String id) {
         DeleteUserProfileResponseModel returnValue = new DeleteUserProfileResponseModel();
         returnValue.setRequestOperation(RequestOperation.DELETE);
