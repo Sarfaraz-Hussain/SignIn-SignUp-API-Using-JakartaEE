@@ -1,5 +1,5 @@
 # CRUD-REST-API
-I have created this API to implement complete login and signup functionality with user authentication by using an access token and saving the encrypted password in the database, to avoid malicious email registration. I have implemented email verification by sending emails via Amazon Simple Email Service. I have deployed this web service on an Amazon EC2 instance which uses Amazon Linux 2023 as an OS.
+I have created this API to implement complete login and signup functionality with user authentication by using an access token and saving the encrypted password in the database. To avoid malicious email registration, I have implemented email verification by sending emails via Amazon Simple Email Service. I have deployed this web service on an Amazon EC2 instance which uses Amazon Linux 2023 as an OS.
 _I have deployed this web service on Amazon EC2 Instance. You can see in the following image_
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(43).png)
 
