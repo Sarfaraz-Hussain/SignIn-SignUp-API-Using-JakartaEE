@@ -61,7 +61,11 @@ _You can see the emailVerificationStatus in the following DB SS._
 - JSON payload with updated user details.
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(39).png)
 
-### Get list of users by Query Parameter
+### 4. Get a unique user 
+- Here we need to pass userId as PathParameter and we need to provide access token in postan header because this is also secured entry point. URL of http request is http://localhost:8080/mobile-app-ws/api/users/user/XAmzmIfnvrTlfudz3LqigwjD0Yu5w3
+![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(41).png)
+
+### 5. Get list of users by Query Parameter
 - How many record we want to fetch from the database, we need to pass in the query parameter. URL For this request http://localhost:8080/mobile-app-ws/api/users/list/?start=0&limit=2
 
 - Response 
