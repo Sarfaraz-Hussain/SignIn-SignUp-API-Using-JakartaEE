@@ -49,3 +49,13 @@ _You can see the emailVerificationStatus in the following DB SS._
 ```
 - Now we can login by using created id and access token. We will pass the created id as path parameter and token as the Bearer Token in postman header. 
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(38).png)
+
+
+### 3. Update user details
+- We need to pass userId of user in PathParameter. URL to update the user is http://localhost:8080/mobile-app-ws/api/users/update/XAmzmIfnvrTlfudz3LqigwjD0Yu5w3 and then we need to pass access token in the postman header section. And we need to pass JSON payload updated user details as you can see in the following pictures.
+
+- Passing access token as bearer token.
+![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(40).png)
+
+- JSON payload with updated user details.
+![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(39).png)
