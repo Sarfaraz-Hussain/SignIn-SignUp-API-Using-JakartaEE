@@ -59,3 +59,27 @@ _You can see the emailVerificationStatus in the following DB SS._
 
 - JSON payload with updated user details.
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(39).png)
+
+### Get list of users by Query Parameter
+- How many record we want to fetch from the database, we need to pass in the query parameter. URL For this request http://localhost:8080/mobile-app-ws/api/users/list/?start=0&limit=2
+
+- Response 
+```json
+[
+    {
+        "email": "call2me786@gmail.com",
+        "firstName": "Sultan",
+        "href": "/users/user/XAmzmIfnvrTlfudz3LqigwjD0Yu5w3",
+        "lastName": "Singh",
+        "userId": "XAmzmIfnvrTlfudz3LqigwjD0Yu5w3"
+    },
+    {
+        "email": "shiitian786@gmail.com",
+        "firstName": "Sharukh",
+        "href": "/users/user/5CWRDZtst0dshgnz1AvV12gqx72KBl",
+        "lastName": "Khan",
+        "userId": "5CWRDZtst0dshgnz1AvV12gqx72KBl"
+    }
+]
+```
+![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(42).png)
