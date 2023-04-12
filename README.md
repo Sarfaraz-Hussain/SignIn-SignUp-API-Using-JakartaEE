@@ -4,9 +4,9 @@ I have created this API to implement complete login and signup functionality wit
 _Note:- Here in the demonstration I have deployed the code on local only_
 
 ## Demonstration: How API works?
-### 1. Create User 
+### 1. Registration/Create User 
 - URL to create user http://localhost:8080/mobile-app-ws/api/users/create
-- Http Request
+- Http Request with the following JSON payload
 ```json
 {
     "firstName" : "Sarfaraz",
@@ -31,3 +31,19 @@ _You can see the emailVerificationStatus in the following DB SS._
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/email.png)
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(37).png)
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Capture.PNG)
+
+### 2. Login with user credentials that we have just created 
+- First we need access token to login. URL to get access token is http://localhost:8080/mobile-app-ws/api/authentication . Following is the username and password in the form of JSON payload.This request will save half access token in the database and half will return as a response to the user and will store it in ios keychain if we are using this web service in ios application. 
+```json
+{
+    "userName" : "call2me786@gmail.com",
+    "userPassword" : "password"
+}
+```
+- Https response with access token 
+```json
+{
+    "id": "XAmzmIfnvrTlfudz3LqigwjD0Yu5w3",
+    "token": "9UFKFy5Wiw0W8nMB2cLuA="
+}
+```
