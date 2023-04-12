@@ -47,3 +47,5 @@ _You can see the emailVerificationStatus in the following DB SS._
     "token": "9UFKFy5Wiw0W8nMB2cLuA="
 }
 ```
+- Now we can login by using created id and access token. We will pass the created id as path parameter and token as the Bearer Token in postman header. 
+![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(38).png)
