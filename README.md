@@ -2,6 +2,9 @@
 I have created this API to implement complete login and signup functionality with user authentication by using an access token. To avoid malicious email registration, I have implemented email verification by sending emails via Amazon Simple Email Service. _I have deployed this web service on an Amazon EC2 instance which uses Amazon Linux 2023 as an OS_.
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(43).png)
 
+## Tech Stack
+Jax-rs, JPA, Jersey, Tomcat 10, HK2, Jsp, Java 17, Maven, AWS, Mysql
+
 _Note:- Here in the demonstration I have deployed the code on local only_
 
 ## Demonstration: How API works?
