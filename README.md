@@ -1,6 +1,9 @@
 # CRUD-REST-API
-I have created this API to implement complete login and signup functionality with user authentication by using an access token and saving the encrypted password in the database. To avoid malicious email registration, I have implemented email verification by sending emails via Amazon Simple Email Service. _I have deployed this web service on an Amazon EC2 instance which uses Amazon Linux 2023 as an OS_.
+I have created this API to implement complete login and signup functionality with user authentication by using an access token. To avoid malicious email registration, I have implemented email verification by sending emails via Amazon Simple Email Service. _I have deployed this web service on an Amazon EC2 instance which uses Amazon Linux 2023 as an OS_.
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(43).png)
+
+## Tech Stack
+Jax-rs, JPA, Jersey, Tomcat 10, HK2, Jsp, Java 17, Maven, AWS, Mysql
 
 _Note:- Here in the demonstration I have deployed the code on local only_
 
@@ -61,7 +64,11 @@ _You can see the emailVerificationStatus in the following DB SS._
 - JSON payload with updated user details.
 ![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(39).png)
 
-### Get list of users by Query Parameter
+### 4. Get a unique user 
+- Here we need to pass userId as PathParameter and we need to provide access token in postan header because this is also secured entry point. URL of http request is http://localhost:8080/mobile-app-ws/api/users/user/XAmzmIfnvrTlfudz3LqigwjD0Yu5w3
+![img](https://github.com/Sarfaraz-Hussain/CRUD-REST-API/blob/master/images/Screenshot%20(41).png)
+
+### 5. Get list of users by Query Parameter
 - How many record we want to fetch from the database, we need to pass in the query parameter. URL For this request http://localhost:8080/mobile-app-ws/api/users/list/?start=0&limit=2
 
 - Response 
